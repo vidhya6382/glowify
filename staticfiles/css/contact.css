@@ -1,0 +1,153 @@
+/* MAIN LAYOUT */
+.contact-wrapper{
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 40px 8%;
+  background: #fff;
+}
+
+/* LEFT */
+.contact-left{
+  flex: 1;
+}
+
+.contact-left h2{
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.contact-left form{
+  background: #fff;
+}
+
+.contact-left .row{
+  display: flex;
+  gap: 15px;
+}
+
+.contact-left input,
+.contact-left textarea{
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.contact-left textarea{
+  height: 120px;
+}
+
+.contact-left button{
+  background: #e91e63;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+/* RIGHT SIDE */
+.contact-right{
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* CUSTOMER CARD */
+.card{
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.card h3{
+  margin-bottom: 15px;
+}
+
+.info{
+  margin-bottom: 12px;
+}
+
+.info p{
+  font-weight: 600;
+}
+
+.info span{
+  font-size: 13px;
+  color: gray;
+  display: block;
+}
+
+/* TRACK / CANCEL BOX */
+.action-box{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 18px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.action-box:hover{
+  background: #ffe6ef;
+}
+
+/* FAQ */
+.faq-section{
+  padding: 30px 8%;
+}
+
+.faq-section h2{
+  margin-bottom: 15px;
+}
+
+.faq-item{
+  background: #f7f7f7;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px){
+  .contact-wrapper{
+    flex-direction: column;
+  }
+
+  .contact-right{
+    width: 100%;
+  }
+
+  .contact-left .row{
+    flex-direction: column;
+  }
+}
+.faq-answer{
+  display: none;
+  padding: 0 15px 15px 15px;
+  color: #666;
+  font-size: 14px;
+}
+
+.faq-item.active .faq-answer{
+  display: block;
+}
+
+.faq-question{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.faq-question p{
+  margin: 0;
+}
