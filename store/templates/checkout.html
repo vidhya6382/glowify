@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+<div class="checkout-container">
+    <h1>Checkout</h1>
+    
+    <div class="checkout-layout">
+        <form id="checkout-form" method="POST" action="{% url 'place_order' %}">
+            {% csrf_token %}
+            <div class="form-section">
+                <h2>1. Shipping Address</h2>
+                <p class="desc">Please enter your delivery details below to proceed.</p>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name*</label>
+                        <input type="text" name="first_name" placeholder="e.g Narmadha" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="last_name" placeholder="e.g Tharmaraj">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile No*</label>
+                        <input type="tel" name="mobile" placeholder="Enter mobile number" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Address*</label>
+                    <input type="text" name="address" placeholder="123 Luxury lane, Tenkasi" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City*</label>
+                        <input type="text" name="city" placeholder="e.g Tenkasi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>State*</label>
+                        <input type="text" name="state" placeholder="e.g Tamil Nadu" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Pin code*</label>
+                        <input type="text" name="pincode" placeholder="Enter Pincode" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>2. Shipping Method</h2>
+                <label class="radio-card active">
+                    <input type="radio" name="shipping" value="standard" checked>
+                    <div>
+                        <strong>Standard Delivery</strong>
+                        <p>3-5 Business Day</p>
+                    </div>
+                    <span class="price">₹50</span>
+                </label>
+            </div>
+            
+            <div class="form-section">
+                <h2>3. Payment Method</h2>
+                <div class="payment-tabs">
+                    <button type="button" class="pay-tab active" data-method="card">💳 Credit Card</button>
+                    <button type="button" class="pay-tab" data-method="netbanking">🏦 Net Banking</button>
+                    <button type="button" class="pay-tab" data-method="upi">UPI</button>
+                </div>
+                
+                <div id="card-fields" class="payment-fields">
+                    <div class="form-group">
+                        <label>Card Number*</label>
+                        <input type="text" name="card_number" placeholder="0000 0000 0000 0000" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date*</label>
+                            <input type="text" name="expiry" placeholder="MM/YYYY" maxlength="7">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV*</label>
+                            <input type="text" name="cvv" placeholder="000" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </div>
+        </form>
+        
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            {% for item in cart_items %}
+            <div class="summary-item">
+                <img src="{{ item.image }}" alt="{{ item.name }}">
+                <div>
+                    <h4>{{ item.name }}</h4>
+                    <p>Shade - {{ item.shade }}</p>
+                    <p>Qty: {{ item.qty }}</p>
+                </div>
+                <strong>Price: ₹{{ item.price }}</strong>
+            </div>
+            {% endfor %}
+            <hr>
+            <div class="summary-row"><span>Subtotal</span><span>₹{{ subtotal }}</span></div>
+            <div class="summary-row"><span>Estimated Shipping</span><span>₹{{ shipping }}</span></div>
+            <div class="summary-row"><span>GST</span><span>₹{{ gst }}</span></div>
+            <hr>
+            <div class="summary-row total"><span>Total</span><span>₹{{ total }}</span></div>
+            <p class="terms">By placing your order, you agree to glowify Terms of service and Privacy Policy</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    const required = this.querySelectorAll('[required]');
+    let valid = true;
+    
+    required.forEach(field => {
+        if (!field.value.trim()) {
+            alert('Please fill in ' + field.previousElementSibling.innerText.replace('*', ''));
+            field.focus();
+            valid = false;
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    if (valid) {
+        const cardNum = this.querySelector('[name="card_number"]');
+        const expiry = this.querySelector('[name="expiry"]');
+        const cvv = this.querySelector('[name="cvv"]');
+        
+        if (cardNum.value && cardNum.value.length < 16) {
+            alert('Please enter a valid card number');
+            e.preventDefault();
+            return false;
+        }
+    }
+});
+
+document.querySelectorAll('.pay-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+</script>
+{% endblock %}

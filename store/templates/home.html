@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO SLIDER -->
+<section class="hero-slider">
+  {% for b in banners %}
+  <div class="slide">
+    <img src="{{ b.image.url }}" alt="">
+    <div class="hero-content">
+      <h1>{{ b.title }}</h1>
+      <p>{{ b.subtitle }}</p>
+      <a href="{{ b.button_url }}" class="btn-pink">{{ b.button_text }}</a>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <h2 class="section-title">Where Luxury Meets Skin Science</h2>
+  <div class="about-grid">
+    <div class="about-images">
+      <img src="{% static 'images/h2.jpg' %}" class="img-1">
+      <img src="{% static 'images/h3.png' %}" class="img-2">
+    </div>
+    <div class="about-text">
+   <p>
+At Glowify, we believe oily skin deserves premium care.
+Our dermatologist-tested formula blends advanced ingredients
+with elegant skincare innovation — giving you confidence
+without compromise.
+</p>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="ingredients">
+  <h2 class="section-title">Powered by Performance Ingredients</h2>
+  <div class="ingredient-grid">
+    {% for i in ingredients %}
+    <div class="ingredient-card">
+      <img src="{{ i.image.url }}">
+      <div class="ingredient-info">
+        <h4>{{ i.name }}</h4>
+        <p>{{ i.description }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section">
+  <h2 class="section-title">Featured Products</h2>
+  <div class="product-grid">
+    {% for p in products %}
+    <div class="product-card">
+      {% if p.tag %}<span class="product-tag">{{ p.tag }}</span>{% endif %}
+      <div class="product-img">
+        <img src="{{ p.image.url }}">
+      </div>
+      <h3>{{ p.name }}</h3>
+      <p class="desc">{{ p.description }}</p>
+      <div class="rating">
+        ⭐ {{ p.rating }} ({{ p.reviews_count }})
+      </div>
+      <div class="price">₹{{ p.price }}</div>
+      <div class="product-actions">
+        <button class="btn-pink">Add to cart</button>
+        <button class="btn-wishlist"><i class="fa fa-heart"></i></button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+  <h2 class="section-title">Top Categories</h2>
+ <div class="category-scroll">
+  <div class="category-grid">
+    
+    {% for c in categories %}
+    <div class="category-card">
+      <img src="{{ c.image.url }}">
+      <h4>{{ c.name }}</h4>
+      <p>{{ c.subtitle }}</p>
+      <a href="{{ c.button_url }}" class="btn-pink">Shop Now</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- WHY -->
+ <h2 class="section-title">Why Glowify</h2>
+<section class="why-section">
+  <div class="why-grid">
+    <div class="why-left">
+      <img src="{% static 'images/why glowify.png' %}" class="why-model">
+    </div>
+    <div class="why-right">
+      {% for w in why_points %}
+      <div class="why-item">
+        <span class="num">{{ forloop.counter|stringformat:"02d" }}</span>
+        <p>{{ w.point }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL - FIXED -->
+<!-- TESTIMONIAL - FIXED -->
+<section class="testimonial-section">
+  <h2 class="section-title">Happy Customers</h2>
+  <div class="testimonial-slider">
+    {% for t in testimonials %}
+    <div class="testimonial-card {% if forloop.first %}active{% endif %}">
+      {% if t.image %}
+        <img src="{{ t.image.url }}" alt="{{ t.name }}" class="testimonial-avatar">
+      {% else %}
+        <img src="{% static 'images/default-avatar.png' %}" class="testimonial-avatar">
+      {% endif %}
+      
+      <div class="stars">
+        {% with ''|center:t.rating as stars %}
+          {% for _ in stars %}★{% endfor %}
+        {% endwith %}
+      </div>
+      
+      <p>"{{ t.review }}"</p>
+      <h5>- {{ t.name }}{% if t.location %}, {{ t.location }}{% endif %}</h5>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-box">
+    <h2>Join The Inner Circle</h2>
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter Email">
+      <button class="btn-white">Register</button>
+    </form>
+  </div>
+</section>
+
+<!-- FLASH -->
+<section class="flash-sale">
+  <div class="flash-content">
+    <img src="{% static 'images/flash.png' %}">
+    <div class="flash-text">
+      <div class="flash-badge">50% OFF</div>
+      <h3>Glow Confidently</h3>
+      <button class="btn-pink">Shop Now</button>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

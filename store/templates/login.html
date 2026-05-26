@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Glowify{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-left">
+        <img src="{% static 'images/login.png' %}" alt="Glowify">
+    </div>
+    
+    <div class="auth-right">
+        <div class="auth-box">
+            <h2>Sign in to your Account</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            
+            <form id="login-form" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label>Email Id</label>
+                    <input type="email" name="email" placeholder="nar@gmail.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="login-password" placeholder="Enter Password" required>
+                        <span class="toggle-password" onclick="togglePassword('login-password')">👁</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="forgot-link">Forget Password?</a>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                
+                <button type="submit" class="auth-btn">Login</button>
+                
+                <p class="switch-auth">Don't have an account? <a href="{% url 'register' %}">Signup</a></p>
+                
+                <p class="help-link">
+                    Need help? <a href="{% url 'contact' %}">Contact us</a>
+                </p>
+                
+                <div class="divider">
+                    <span>Instant Login</span>
+                </div>
+                
+               <div class="social-auth">
+    <button type="button" class="social-btn google">
+        <i class="fab fa-google"></i> Continue With Google
+    </button>
+    <button type="button" class="social-btn facebook">
+        <i class="fab fa-facebook-f"></i> Continue With Facebook
+    </button>
+</div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+document.getElementById('login-form').addEventListener('submit', function(e) {
+    const email = this.querySelector('[name="email"]');
+    const password = this.querySelector('[name="password"]');
+    
+    if (!email.value.trim()) {
+        alert('Please enter Email Id');
+        email.focus();
+        e.preventDefault();
+        return false;
+    }
+    
+    if (!password.value.trim()) {
+        alert('Please enter Password');
+        password.focus();
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+{% endblock %}

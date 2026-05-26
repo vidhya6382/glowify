@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section class="about-page">
+    {% if about %}
+    <!-- 1. Hero Section -->
+    <div class="about-hero" style="background-image: url('{{ about.hero_bg_image.url }}')">
+        <div class="hero-card">
+            <h1>{{ about.hero_title }}</h1>
+            <p>{{ about.hero_subtitle }}</p>
+        </div>
+    </div>
+
+    <!-- 2. Our Story + Mission -->
+    <div class="container">
+        <div class="story-section">
+            <div class="story-content">
+                <h2>{{ about.story_title }}</h2>
+                <div class="story-text">{{ about.story_content|linebreaks }}</div>
+                
+                <h2 class="mission-title">{{ about.mission_title }}</h2>
+                <div class="story-text">{{ about.mission_content|linebreaks }}</div>
+            </div>
+            <div class="story-image">
+                <img src="{{ about.story_image.url }}" alt="Our Story">
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 3. Core Values -->
+    <div class="container">
+        <h2 class="section-title">Our Core Values</h2>
+        <div class="values-grid">
+            {% for value in core_values %}
+            <div class="value-card">
+                {% if value.icon %}
+                <div class="value-icon"><img src="{{ value.icon.url }}" alt="{{ value.title }}"></div>
+                {% endif %}
+                <h3>{{ value.title }}</h3>
+                <p>{{ value.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 4. Founder Section -->
+    {% if founder %}
+    <div class="container">
+        <div class="founder-section">
+            <div class="founder-image">
+                <img src="{{ founder.founder_image.url }}" alt="{{ founder.founder_name }}">
+            </div>
+            <div class="founder-content">
+                <h2>{{ founder.title }}</h2>
+                <div class="founder-text">{{ founder.content|linebreaks }}</div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 5. Commitment Section -->
+    {% if commitment %}
+    <div class="container">
+        <div class="commitment-box">
+            <h2>{{ commitment.title }}</h2>
+            <div class="commitment-text">{{ commitment.content|linebreaks }}</div>
+            {% if commitment.button_link %}
+            <a href="{{ commitment.button_link }}" class="commitment-btn">{{ commitment.button_text }}</a>
+            {% else %}
+            <button class="commitment-btn">{{ commitment.button_text }}</button>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

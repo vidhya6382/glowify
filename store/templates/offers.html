@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="offers-page">
+    
+    <!-- 1. Main Banner -->
+    {% if banner %}
+    <div class="offer-banner">
+        <img src="{{ banner.banner_image.url }}" alt="Offer Banner" class="banner-bg">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <div class="banner-tags">
+                    <div class="tag">{{ banner.title }}</div>
+                    <div class="tag">{{ banner.subtitle }}</div>
+                    <div class="tag">{{ banner.offer_text }}</div>
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    {% endif %}
+
+    <!-- 2. Buy 1 Get 1 Free Section -->
+    <div class="container">
+        <h2 class="section-title">Buy 1 Get 1 Free</h2>
+        <div class="bogo-grid">
+            {% for product in bogo_products %}
+            <div class="bogo-card">
+                <div class="bogo-img">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <div class="bogo-info">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <div class="price">
+                        <span class="sale-price">₹{{ product.sale_price }}</span>
+                        <span class="orig-price">₹{{ product.original_price }}</span>
+                    </div>
+                    <button class="add-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+<br><br><br><br>
+    <!-- 3. Exclusive Kit Section -->
+    {% if exclusive %}
+    <div class="container exclusive-section">
+        <div class="exclusive-grid">
+            <div class="exclusive-img">
+                <img src="{{ exclusive.image.url }}" alt="{{ exclusive.title }}">
+            </div>
+            <div class="exclusive-info">
+                <h2>{{ exclusive.title }}</h2>
+                <p>{{ exclusive.description|linebreaks }}</p>
+                <div class="price">
+                    <span class="sale-price">₹{{ exclusive.sale_price }}</span>
+                    <span class="orig-price">₹{{ exclusive.original_price }}</span>
+                    <span class="discount">Save {{ exclusive.discount_percent }} %</span>
+                </div>
+                <button class="claim-btn">{{ exclusive.button_text }}</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 4. Newsletter Section -->
+    {% if newsletter %}
+    <div class="container">
+        <div class="newsletter-box" {% if newsletter.background_image %}style="background-image: url('{{ newsletter.background_image.url }}')"{% endif %}>
+            <h2>{{ newsletter.heading }}</h2>
+            <p>{{ newsletter.description }}</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter You Email">
+                <button type="submit">{{ newsletter.button_text }}</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock %}

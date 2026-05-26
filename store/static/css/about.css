@@ -1,0 +1,268 @@
+.about-page {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 1. Hero */
+.about-hero {
+  background-size: cover;
+  background-position: center;
+  padding: 120px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 60px 80px;
+  text-align: center;
+  max-width: 800px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+.hero-card h1 {
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.hero-card p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* 2. Story Section */
+.story-section {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.story-content h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.mission-title {
+  margin-top: 40px;
+}
+
+.story-text p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.story-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* 3. Core Values */
+.section-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 60px 0 50px;
+  color: #222;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.value-card {
+  background: #E91E63;
+  border-radius: 200px 200px 16px 16px;
+  padding: 60px 30px 40px;
+  text-align: center;
+  color: #fff;
+  min-height: 420px;
+}
+
+.value-icon {
+  margin-bottom: 25px;
+}
+
+.value-icon img {
+  width: 50px;
+  height: 50px;
+  filter: brightness(0) invert(1);
+}
+
+.value-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.value-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+/* 4. Founder */
+.founder-section {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 60px;
+  align-items: start;
+  padding: 60px 0;
+}
+
+.founder-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.founder-content h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.founder-text p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+/* 5. Commitment */
+.commitment-box {
+  background: #FCE4EC;
+  border-radius: 20px;
+  padding: 60px;
+  text-align: center;
+  margin: 80px 0;
+}
+
+.commitment-box h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.commitment-text p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 16px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.commitment-btn {
+  background: #E91E63;
+  color: #fff;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.commitment-btn:hover {
+  background: #d81b60;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .story-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .founder-section {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .hero-card {
+    padding: 40px 50px;
+  }
+  .hero-card h1 {
+    font-size: 36px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 60px 20px;
+    min-height: 400px;
+  }
+  .hero-card {
+    padding: 30px 25px;
+  }
+  .hero-card h1 {
+    font-size: 28px;
+  }
+  .hero-card p {
+    font-size: 16px;
+  }
+  .story-section {
+    padding: 50px 0;
+  }
+  .story-content h2 {
+    font-size: 26px;
+  }
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+  .value-card {
+    min-height: auto;
+    padding: 50px 25px 35px;
+  }
+  .section-title {
+    font-size: 26px;
+    margin: 40px 0 30px;
+  }
+  .commitment-box {
+    padding: 40px 25px;
+    margin: 50px 0;
+  }
+  .commitment-box h2 {
+    font-size: 26px;
+  }
+}
+
+/* Small Phone */
+@media (max-width: 480px) {
+  .hero-card h1 {
+    font-size: 24px;
+  }
+  .container {
+    padding: 0 15px;
+  }
+}

@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #f7f7f7;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: white;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.navbar ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+/* MESSAGE */
+.message-box {
+  text-align: center;
+  margin: 10px;
+  color: green;
+}
+
+/* CONTAINER */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* LEFT */
+.left img {
+  width: 350px;
+}
+
+/* RIGHT */
+.right {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.right h2 {
+  margin-bottom: 20px;
+}
+
+.right input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.remember {
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #ff2e6d;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+/* Tablet */
+@media(max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left img {
+    width: 250px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Mobile */
+@media(max-width: 500px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .right {
+    width: 100%;
+  }
+}
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+}
+
+.social-btn:hover {
+    background: #f8f8f8;
+    border-color: #ccc;
+}
+
+.social-btn i {
+    font-size: 18px;
+}
+
+.social-btn.google i {
+    color: #DB4437;
+}
+
+.social-btn.facebook i {
+    color: #1877F2;
+}

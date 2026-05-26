@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Cart - Glowify{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}?v=2">
+
+<div class="cart-container">
+    <h1>Your Cart</h1>
+    <p class="subtitle">Review your selection Before Checkout ({{ item_count }} items)</p>
+    
+    {% if cart_items %}
+    <div class="cart-layout">
+        <div class="cart-items">
+            <div class="cart-header">
+                <span class="col-product">Product</span>
+                <span class="col-qty">Quantity</span>
+                <span class="col-price">Price</span>
+                <span class="col-total">Total</span>
+            </div>
+            
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <div class="col-product">
+                    <input type="checkbox" class="item-checkbox" 
+                           {% if item.selected %}checked{% endif %} 
+                           onchange="toggleItem('{{ item.id }}')">
+                    <img src="{{ item.image }}" alt="{{ item.name }}">
+                    <div class="product-details">
+                        
+                        <button class="remove-btn" onclick="removeItem('{{ item.id }}')">
+                            <i class="fa fa-trash"></i> Remove
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-qty">
+                    <div class="quantity">
+                        <button type="button" onclick="updateQty('{{ item.id }}', 'decrease')">-</button>
+                        <span>{{ item.qty }}</span>
+                        <button type="button" onclick="updateQty('{{ item.id }}', 'increase')">+</button>
+                    </div>
+                </div>
+                
+                <div class="col-price">₹{{ item.price }}</div>
+                <div class="col-total">₹{{ item.total }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+                <span>{{ item_count }} Item selected</span>
+            </div>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>₹{{ subtotal }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Estimated Shipping</span>
+                <span>₹{{ shipping }}</span>
+            </div>
+            <div class="summary-row">
+                <span>GST</span>
+                <span>₹{{ gst }}</span>
+            </div>
+            <hr>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>₹{{ total }}</span>
+            </div>
+            {% if item_count > 0 %}
+            <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+            {% else %}
+            <button class="checkout-btn disabled" disabled>Select items to checkout</button>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <img src="{% static 'images/empty-cart.svg' %}" alt="Empty Cart">
+        <h3>Your cart is empty</h3>
+        <p>Looks like you haven't added anything yet</p>
+        <a href="{% url 'shop' %}" class="shop-now-btn">Shop Now</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function updateQty(id, action) {
+    fetch('{% url "update_cart" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({product_id: id, action: action})
+    }).then(() => location.reload());
+}
+
+function toggleItem(id) {
+    fetch('{% url "update_cart" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({product_id: id, action: 'toggle'})
+    }).then(() => location.reload());
+}
+
+function removeItem(id) {
+    if(confirm('Are you sure you want to remove this item from cart?')) {
+        fetch('{% url "remove_from_cart" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({product_id: id})
+        }).then(() => {
+            alert('Item removed from cart');
+            location.reload();
+        });
+    }
+}
+</script>
+{% endblock %}

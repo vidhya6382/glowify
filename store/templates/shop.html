@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/shop.css' %}">
+
+<div class="container">
+
+    <!-- FILTER SECTION -->
+    <aside class="filter">
+        <form method="GET">
+            <h3>Filter</h3>
+
+            <label>Brand</label>
+            <select name="brand">
+                <option value="">All</option>
+                <option value="Lakme">Lakme</option>
+                <option value="Maybelline">Maybelline</option>
+            </select>
+
+            <label>Color</label>
+            <select name="color">
+                <option value="">All</option>
+                <option value="Pink">Pink</option>
+                <option value="Red">Red</option>
+            </select>
+
+            <label>Price</label>
+            <select name="price">
+                <option value="">All</option>
+                <option value="low">Below 500</option>
+                <option value="mid">500-1000</option>
+                <option value="high">Above 1000</option>
+            </select>
+
+            <button type="submit">Apply</button>
+        </form>
+    </aside>
+
+    <!-- PRODUCTS -->
+   <section class="products">
+    <h2>Lipsticks</h2>
+    <div class="grid">
+        {% for product in products %}
+        <a href="{% url 'product_detail' product.pk %}" class="card-link">
+            <div class="card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h4>{{ product.name }}</h4>
+                <p>₹{{ product.price }}</p>
+                <p>⭐ {{ product.rating }}</p>
+                <button type="button">View Details</button>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+</div>
+
+{% endblock %}

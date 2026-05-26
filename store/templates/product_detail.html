@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Glowify{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+
+<div class="product-detail-container">
+    <div class="product-main">
+        <!-- Left: Image -->
+        <div class="product-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+
+        <!-- Right: Info -->
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
+            
+            <div class="rating">
+                <span>⭐ {{ product.rating }}</span>
+                <span>({{ product.reviews_count }} Reviews)</span>
+            </div>
+
+            <h3 class="tagline">{{ product.tagline }}</h3>
+
+            <p class="description">{{ product.description }}</p>
+
+            <p class="price">Price: <span>₹{{ product.price }}</span></p>
+
+            <div class="shade-section">
+                <h4>Shade</h4>
+                <div class="shades">
+                    <span class="shade" style="background:#E8A0A0" data-shade="Rose Blush"></span>
+                    <span class="shade" style="background:#D32F2F" data-shade="Ruby Desire"></span>
+                    <span class="shade" style="background:#C87676" data-shade="Coral Kiss"></span>
+                    <span class="shade" style="background:#B85C5C" data-shade="Berry Bold"></span>
+                    <span class="shade" style="background:#6D2E2E" data-shade="Wine Night"></span>
+                </div>
+            </div>
+
+            <!-- FIXED: Added form + CSRF + hidden qty input -->
+            <form method="POST" action="{% url 'add_to_cart' product.pk %}" class="cart-form">
+                {% csrf_token %}
+                <div class="cart-section">
+                    <div class="quantity">
+                        <button type="button" onclick="updateQty(-1)">-</button>
+                        <span id="qty">1</span>
+                        <button type="button" onclick="updateQty(1)">+</button>
+                    </div>
+                    <input type="hidden" name="quantity" id="qty-input" value="1">
+                    <input type="hidden" name="shade" id="shade-input" value="Rose Blush">
+                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="product-tabs">
+        <div class="tab-headers">
+            <button class="tab active" onclick="openTab(event, 'desc')">Product Description</button>
+            <button class="tab" onclick="openTab(event, 'use')">How to Use</button>
+            <button class="tab" onclick="openTab(event, 'benefits')">Benefits</button>
+        </div>
+
+        <div id="desc" class="tab-content active">
+            <h3>{{ product.tagline }}</h3>
+            <p>{{ product.description }}</p>
+            
+            <h4>Product Details</h4>
+            <ul>
+                <li>Net Weight: {{ product.net_weight }}</li>
+                <li>Finish: {{ product.finish }}</li>
+                <li>Skin Type: {{ product.skin_type }}</li>
+                <li>Dermatologically Tested</li>
+            </ul>
+        </div>
+
+        <div id="use" class="tab-content">
+            <p>Apply directly to lips. Start from center and move outward for perfect finish.</p>
+        </div>
+
+        <div id="benefits" class="tab-content">
+            <p>Long-lasting, hydrating formula with rich pigmentation and satin glow.</p>
+        </div>
+    </div>
+
+    <!-- You may also like -->
+    <div class="related-products">
+        <h2>You may also Like</h2>
+        <div class="related-grid">
+            {% for related in related_products %}
+            <a href="{% url 'product_detail' related.pk %}" class="related-card">
+                <img src="{{ related.image.url }}" alt="{{ related.name }}">
+                <h4>{{ related.name }}</h4>
+                <button type="button">Shop Now</button>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+let qty = 1;
+
+// FIXED: Update hidden input so backend gets correct qty
+function updateQty(change) {
+    qty = Math.max(1, qty + change);
+    document.getElementById('qty').innerText = qty;
+    document.getElementById('qty-input').value = qty;
+}
+
+// FIXED: Shade selection
+document.querySelectorAll('.shade').forEach(shade => {
+    shade.addEventListener('click', function() {
+        document.querySelectorAll('.shade').forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('shade-input').value = this.dataset.shade;
+    });
+});
+document.querySelector('.shade').classList.add('active'); // Default first shade
+
+// FIXED: Pass event parameter
+function openTab(evt, tabName) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+{% endblock %}
